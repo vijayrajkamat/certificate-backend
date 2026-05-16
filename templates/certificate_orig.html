@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<style>
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.certificate {
+    position: relative;
+    width: 1040px;
+    height: 720px;
+}
+
+.background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.overlay {
+    position: absolute;
+    color: black;
+}
+
+.name {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 50px;
+    font-weight: bold;
+    width: 700px;
+    text-align: center;
+}
+
+.purpose {
+    top: 140px;
+    left: 30px;
+    width: 1000px;
+    font-size: 24px;
+}
+
+.values {
+    top: 325px;
+    left: 450px;
+    width: 450px;
+}
+
+.strengths {
+    top: 325px;
+    left: 850px;
+    width: 450px;
+}
+
+.passions {
+    top: 650px;
+    left: 450px;
+    width: 450px;
+}
+
+.skills {
+    top: 650px;
+    left: 850px;
+    width: 450px;
+}
+
+ul {
+    margin: 0;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="certificate">
+
+    <img
+        src="file:///{{ background_image }}"
+    	class="background"
+    >
+
+    <div class="overlay name">
+        {{ name }}
+    </div>
+
+    <div class="overlay purpose">
+        {{ purpose }}
+    </div>
+
+    <div class="overlay strengths">
+        <ul>
+            {% for item in strengths %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="overlay skills">
+        <ul>
+            {% for item in skills %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="overlay values">
+        <ul>
+            {% for item in values %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="overlay passions">
+        <ul>
+            {% for item in passions %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</div>
+
+</body>
+</html>

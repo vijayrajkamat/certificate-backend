@@ -5,6 +5,8 @@ from sqlalchemy import String
 from sqlalchemy import Text
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import DateTime
+from datetime import datetime
 
 DATABASE_URL = "sqlite:///certificates.db"
 
@@ -41,6 +43,16 @@ class CertificateSubmission(Base):
     passions = Column(Text)
 
     purpose = Column(Text)
+    
+    created_on = Column(
+        DateTime,
+        default=datetime.utcnow
+    )
+    
+    workshop_code = Column(
+        String,
+        nullable=True
+)
 
 
 def init_db():

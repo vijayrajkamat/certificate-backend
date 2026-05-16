@@ -1,2 +1,6 @@
 venv/
 __pycache__/
+.env
+certificates.db
+generated_pdfs/*.pdf
+generated_pdfs/*.html

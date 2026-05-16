@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+
+<style>
+
+@page {
+    size: A4 landscape;
+    margin: 0;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 297mm;
+    height: 210mm;
+    font-family: Arial, sans-serif;
+}
+
+.certificate {
+    position: relative;
+    width: 297mm;
+    height: 210mm;
+    overflow: hidden;
+}
+
+.background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.overlay {
+    position: absolute;
+    color: black;
+    font-family: Arial, sans-serif;
+    z-index: 1;
+}
+
+.name {
+		    top: 17mm;
+		    left: 53%;
+		    transform: translateX(-50%);
+		    width: 145mm;
+		    text-align: center;
+		    font-size: 52px;
+		    font-weight: 500;
+		}
+
+        .purpose {
+		    top: 55mm;
+		    left: 87mm;
+		    width: 182mm;
+		    font-size: 17px;
+		    line-height: 1.5;
+		}
+
+        .values {
+		    top: 97mm;
+		    left: 107mm;
+		    width: 65mm;
+		    font-size: 17px;
+		}
+
+        .strengths {
+		    top: 97mm;
+		    left: 189mm;
+		    width: 62mm;
+		    font-size: 17px;
+		}
+
+        .passions {
+		    top: 155mm;
+		    left: 107mm;
+		    width: 68mm;
+		    font-size: 17px;
+		}
+
+        .skills {
+		    top: 155mm;
+		    left: 189mm;
+		    width: 62mm;
+		    font-size: 17px;
+		}
+
+        ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        li {
+            line-height: 1.35;
+            margin-bottom: 3px;
+        }
+
+</style>
+
+</head>
+
+<body>
+
+<div class="certificate">
+
+    <img
+        src="file:///{{ background_image }}"
+        class="background"
+    >
+
+    <div class="overlay name">
+        {{ name }}
+    </div>
+
+    <div class="overlay purpose">
+        {{ purpose }}
+    </div>
+
+    <div class="overlay values">
+        <ul>
+            {% for item in values %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="overlay strengths">
+        <ul>
+            {% for item in strengths %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="overlay passions">
+        <ul>
+            {% for item in passions %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="overlay skills">
+        <ul>
+            {% for item in skills %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</div>
+
+</body>
+</html>
