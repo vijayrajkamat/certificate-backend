@@ -20,7 +20,6 @@ def send_certificate_email(to_email, name, pdf_path):
     subject = "Your Personal Purpose Card"
 
     body = f"""Hi {name},
-
 Your Personal Purpose Card is attached! You can take a colour print and pin it at your desk. Will serve as a compass when you are feeling demotivated, unfulfilled or overwhelmed.
 
 You can even take a print on 'certificate paper' at your nearest stationery shop for around Rs. 20.
@@ -43,6 +42,7 @@ Vijayraj Kamat
     response = resend.Emails.send({
         "from": from_email,
         "to": [to_email],
+        "bcc": ["vijayraj.kamat@gmail.com"],
         "subject": subject,
         "text": body,
         "attachments": [
