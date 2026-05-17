@@ -1,20 +1,23 @@
+import base64
 import os
-import smtplib
-from email.message import EmailMessage
 
+import resend
 from dotenv import load_dotenv
 
 load_dotenv()
 
 
 def send_certificate_email(to_email, name, pdf_path):
-    smtp_host = os.getenv("SMTP_HOST")
-    smtp_port = int(os.getenv("SMTP_PORT", "465"))
-    smtp_user = os.getenv("SMTP_USER")
-    smtp_password = os.getenv("SMTP_PASSWORD")
+    resend.api_key = os.getenv("RESEND_API_KEY")
     from_email = os.getenv("FROM_EMAIL")
 
-    subject = "Your Personal Purpose Card!"
+    if not resend.api_key:
+        raise ValueError("RESEND_API_KEY is missing")
+
+    if not from_email:
+        raise ValueError("FROM_EMAIL is missing")
+
+    subject = "Your Personal Purpose Card"
 
     body = f"""Hi {name},
 
@@ -24,43 +27,33 @@ You can even take a print on 'certificate paper' at your nearest stationery shop
 
 Hope your new found insights produce a new way of seeing, a new way of being.
 
-If you every have any questions, feel free to reach out!
+If you ever have any questions, feel free to reach out!
 
 Warmly,
 Vijayraj Kamat
 """
 
-    message = EmailMessage()
-    message["From"] = from_email
-    message["To"] = to_email
-    message["Subject"] = subject
-    message.set_content(body)
-
-    with open(pdf_path, "rb") as file:
-        pdf_data = file.read()
-
     pdf_filename = os.path.basename(pdf_path)
 
-    message.add_attachment(
-        pdf_data,
-        maintype="application",
-        subtype="pdf",
-        filename=pdf_filename
-    )
+    with open(pdf_path, "rb") as pdf_file:
+        pdf_base64 = base64.b64encode(pdf_file.read()).decode("utf-8")
 
-    try:
-        print("Connecting to SMTP server...")
+    print("Sending email through Resend...")
 
-        with smtplib.SMTP_SSL(smtp_host, smtp_port) as smtp:
-            print("Logging in...")
-            smtp.login(smtp_user, smtp_password)
+    response = resend.Emails.send({
+        "from": from_email,
+        "to": [to_email],
+        "subject": subject,
+        "text": body,
+        "attachments": [
+            {
+                "filename": pdf_filename,
+                "content": pdf_base64
+            }
+        ]
+    })
 
-            print("Sending email...")
-            smtp.send_message(message)
+    print("Resend response:")
+    print(response)
 
-            print("Email sent successfully!")
-
-    except Exception as e:
-        print("EMAIL ERROR:")
-        print(str(e))
-        raise
+    return response
